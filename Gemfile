@@ -5,6 +5,7 @@ ruby '2.1.1'
 gem 'sinatra'
 gem 'data_mapper'
 gem 'dm-postgres-adapter'
+gem 'bcrypt-ruby'
 
 
 group :development, :test do
