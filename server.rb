@@ -1,7 +1,8 @@
+require 'rack-flash'
 require 'data_mapper'
 require 'sinatra'
 require 'sinatra/base'
-require 'rack-flash'
+
 
 env = ENV["RACK_ENV"] || "development"
 DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
