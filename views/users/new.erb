@@ -6,3 +6,12 @@
 	Confirm password: <input name="password_confirmation" type="password">
 	<input type="submit" value="Sign Up">
 </form>
+
+<% if flash[:errors] && !flash[:errors].empty? %>
+  	Sorry, there were the following problems with the form.
+  		<ul id="errors">
+  			<% flash[:errors].each do |error| %>
+  				<li><%= error %></li>
+  			<% end %>
+  		</ul> 
+  <% end %>
