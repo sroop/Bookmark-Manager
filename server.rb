@@ -11,11 +11,12 @@ require './lib/tag'
 DataMapper.finalize
 DataMapper.auto_upgrade!
 
-enable :sessions
-set :session_secret, 'super secret'
-
 
 class BookmarkManager < Sinatra::Base
+	
+	enable :sessions
+	set :session_secret, 'super secret'
+
 
 	get '/' do
 		@links = Link.all
@@ -51,7 +52,7 @@ class BookmarkManager < Sinatra::Base
 
 helpers do
   	def current_user    
-    	@current_user ||= User.get(session[:user_id]) if session[:user_id]
+    	User.get(session[:user_id]) if session[:user_id]
   	end
 end
 
