@@ -1,5 +1,8 @@
 require 'spec_helper'
 require 'user'
+require_relative '../../helpers/session'
+
+	include SessionHelpers
 
 feature "User signs up" do
 	scenario "when being logged out" do
@@ -24,16 +27,16 @@ feature "User signs up" do
 		expect(page).to have_content("Email is already taken")
 	end
 
-	def sign_up(email = "sroop@sunar.com",
-				password = "12345678",
-				password_confirmation = "12345678")
-		visit '/users/new'
-		expect(page.status_code).to eq(200)
-		fill_in :email, with: email
-		fill_in :password, with: password
-		fill_in :password_confirmation, with: password_confirmation
-		click_button "Sign Up"
-	end
+	# def sign_up(email = "sroop@sunar.com",
+	# 			password = "12345678",
+	# 			password_confirmation = "12345678")
+	# 	visit '/users/new'
+	# 	expect(page.status_code).to eq(200)
+	# 	fill_in :email, with: email
+	# 	fill_in :password, with: password
+	# 	fill_in :password_confirmation, with: password_confirmation
+	# 	click_button "Sign Up"
+	# end
 
 end
 
@@ -52,10 +55,26 @@ feature "User signs in" do
 		expect(page).to have_content("Welcome, test@test.com")
 	end
 
-	def sign_in(email, password)
-		visit '/sessions/new'
-		fill_in 'email', with: email
-		fill_in 'password', with: password
-		click_button 'Sign in'
+	# def sign_in(email, password)
+	# 	visit '/sessions/new'
+	# 	fill_in 'email', with: email
+	# 	fill_in 'password', with: password
+	# 	click_button 'Sign in'
+	# end
+end
+
+feature "User signs out" do
+	
+	before(:each) do
+		User.create(email: "test@test.com",
+					password: 'test',
+					password_confirmation: 'test')
+	end
+
+	scenario 'while being signed in' do
+		sign_in('test@test.com', 'test')
+		click_button "Sign out"
+		expect(page).to have_content("Good bye!")
+		expect(page).to_not have_content("Welcome, test@test.com")
 	end
 end

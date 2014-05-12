@@ -54,6 +54,11 @@ class BookmarkManager < Sinatra::Base
 		erb :"sessions/new"
 	end
 
+	delete '/session' do
+		session[:user_id] = nil
+		"Good bye!"
+	end
+
 	post '/sessions' do
 		email, password = params[:email], params[:password]
 		user = User.authenticate(email, password)

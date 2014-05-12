@@ -1,7 +1,17 @@
 <body>
-  <% if current_user %>
+
+    <% if current_user %>
     Welcome, <%= current_user.email %>
+    <form method="POST" action="/session">
+      <input type="hidden" name="_method" value="delete">
+      <input type="submit" value="Sign out">
+    </form>
   <% end %>
   <%= yield %>
+    <% if flash[:notice] %>
+    <div id="notice">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
 
 </body>
