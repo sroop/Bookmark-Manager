@@ -10,6 +10,11 @@
 <ul>
 	<% @links.each do |link| %>
 	<li><a href="<%= link.url %>"><%= link.title %></a></li>
+		<% link.tags.each do |tag| %>
+			<form action="/tags/<%= tag.text %>" method="post">
+				<p><%= tag.text %></p>
+			</form>
+		<% end %>
 	<% end %>
 </ul>
 
