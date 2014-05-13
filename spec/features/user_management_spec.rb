@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'user'
 
 feature "User signs up" do
-	scenario "when being logged out" do
+	scenario "user is able to login" do
 		lambda { sign_up }.should change(User, :count).by(1)
 		expect(page).to have_content("Welcome, sroop@sunar.com")
 		expect(User.first.email).to eq("sroop@sunar.com")

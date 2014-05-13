@@ -32,7 +32,7 @@ class BookmarkManager < Sinatra::Base
 		erb :index
 	end
 
-	get '/users/new' do
+	post '/users/new' do
 		@user = User.new
   		erb :"users/new"
 	end
