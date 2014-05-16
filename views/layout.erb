@@ -1,13 +1,30 @@
 <body>
 
 <% unless current_user  %>
-  <form action="/users/new" method="post"><button>Sign Up</button></form>
+
+  <form action="/users/new" method="get"><button>Sign Up</button></form>
   <form action="/sessions/new" method="get"><button>Login</button></form>
+
+  <% if flash[:notice] %>
+    <div id="notice">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
  <% end %>
 
   <% if current_user %>
+
+  	<form action="/sessions" method="post">
+    	<input type="hidden" name="_method" value="delete">
+    	<input type="submit" value="Log Out">
+    </form>
+
     Welcome, <%= current_user.email %>
+    
   <% end %>
   <%= yield %>
+
+
 
 </body>
