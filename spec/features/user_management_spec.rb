@@ -82,3 +82,13 @@ feature 'User signs out' do
 
 end
 
+feature 'User forgets password' do
+	
+	scenario 'can see the password recovery form' do
+		visit '/'
+		click_on 'Login'
+		expect(page).to have_content("Forgotten your password?")
+		click_on 'Forgotten your password?'
+		expect(page).to have_content("Recover your password")
+	end
+end
