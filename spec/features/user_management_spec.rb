@@ -39,9 +39,9 @@ end
 feature "User signs in" do
 
 	before(:each) do
-    User.create(:email => "test@test.com", 
-                :password => 'test', 
-                :password_confirmation => 'test')
+    User.create(email: "test@test.com", 
+                password: 'test', 
+                password_confirmation: 'test')
   	end
 
 	scenario "with the correct logins" do
@@ -67,9 +67,9 @@ end
 feature 'User signs out' do
 	
 	before(:each) do
-    User.create(:email => "test@test.com", 
-                :password => 'test', 
-                :password_confirmation => 'test',)
+    User.create(email: "test@test.com", 
+                password: 'test', 
+                password_confirmation: 'test')
   	end
 
   	scenario 'while being signed in' do

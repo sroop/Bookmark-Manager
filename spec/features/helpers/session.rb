@@ -10,11 +10,22 @@ module SessionHelpers
 		click_on "Submit"
 	end
 
-	def sign_in(email, password)
+	def sign_in(email = "test@test.com",
+				password = "test")
 		visit '/sessions/new'
 		fill_in 'email', with: email
 		fill_in 'password', with: password
 		click_on 'Enter'
 	end
+
+	def add_link(url, title, tags)
+		within('#new-link') do
+			fill_in 'url', with: url
+			fill_in 'title', with: title
+			fill_in 'tags', with: tags
+			click_button 'Add link'
+		end
+	end
+
 
 end
