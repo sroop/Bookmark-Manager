@@ -60,6 +60,15 @@ feature "User signs in" do
 		expect(page).to have_content("Welcome")
 	end
 
+	scenario "with incorrect logins" do
+		visit '/'
+		expect(page).to_not have_content("Welcome")
+		click_on 'Login'
+		expect(page).to have_content("Email:")
+		sign_in('test@test.com', 'wrong')
+		expect(page).to_not have_content("Welcome")
+	end
+
 	def sign_in(email, password)
 		visit '/sessions/new'
 		fill_in 'email', with: email
