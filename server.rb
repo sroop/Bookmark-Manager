@@ -83,7 +83,7 @@ class BookmarkManager < Sinatra::Base
 	end
 
 	post '/sessions/reset' do
-		# User.recover_password(params[:email])
+		User.recover_password(params[:email]) #either send the email in the method in user model or could just put it in here
 		flash[:notice] = "Recovery email sent!"
 		redirect to('/')
 	end

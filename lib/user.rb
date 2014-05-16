@@ -10,6 +10,7 @@ class User
 	property :id, Serial
 	property :email, String, unique: true
 	property :password_digest, Text
+	property :token, String, length: 64
 
 	def password=(password)
 		@password = password
@@ -23,6 +24,16 @@ class User
 		user = first(email: email)
 		if user && BCrypt::Password.new(user.password_digest) == password
 			user
+		else
+			nil
+		end
+	end
+
+	def self.recover_password(email)
+		user = first(email: email)
+		if user
+			user.token = SecureRandom.hex(32)
+			user.save
 		else
 			nil
 		end
