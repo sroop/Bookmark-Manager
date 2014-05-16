@@ -78,13 +78,39 @@ class BookmarkManager < Sinatra::Base
 		redirect to('/')
 	end
 
-	get '/sessions/reset' do
+	get '/sessions/recover' do
+		erb :"sessions/recover"
+	end
+
+	post '/sessions/recover' do
+		user = User.recover_password(params[:email]) #either send the email in the method in user model or could just put it in here
+		if user
+			#send email to user with link
+		end
+		flash[:notice] = "Recovery email sent!"
+		redirect to('/')
+	end
+
+	get '/sessions/reset/:token' do
+		@token = params[:token]
 		erb :"sessions/reset"
 	end
 
-	post '/sessions/reset' do
-		User.recover_password(params[:email]) #either send the email in the method in user model or could just put it in here
-		flash[:notice] = "Recovery email sent!"
+	post '/sessions/reset/:token' do
+		user = User.first(email: params[:email], token: params[:token])
+	
+		if user
+			user.password = params[:password]
+			user.password_confirmation = params[:password_confirmation]
+			user.token = nil
+			if user.save
+				session[:user_id] = user.id
+				redirect to('/')
+			else
+				flash[:notice] = user.errors.full_messages
+				redirect to("/sessions/reset/#{params[:token]}")
+			end
+		end	
 		redirect to('/')
 	end
 

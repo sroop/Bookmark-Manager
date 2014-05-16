@@ -1,6 +1,8 @@
-<h1>Recover your password</h1>
+<h1>Reset your password</h1>
 
-<form action="/sessions/reset" method="post">
+<form action="/sessions/reset/<%= @token %>" method="post">
 	Email: <input name="email" type="text">
-	<input type="submit" value="Recover">
+	Password: <input name="password" type="password">
+	Confirm password: <input name="password_confirmation" type="password">
+	<input type="submit" value="Reset">
 </form>

@@ -85,7 +85,7 @@ end
 feature 'User forgets password' do
 
 	before(:each) do
-    User.create(email: "test@test.com", 
+    	User.create(email: "test@test.com", 
                 password: 'test', 
                 password_confirmation: 'test')
   	end
@@ -99,9 +99,25 @@ feature 'User forgets password' do
 	end
 
 	scenario 'can request a recovery email' do
-		visit '/sessions/reset'
-		fill_in 'email', with: "test@test.com"
-		click_on 'Recover'
+		recover_password
 		expect(page).to have_content("Recovery email sent!")
 	end
+
+	scenario 'can generate a token when recover button is pressed' do
+		recover_password
+		expect(page).to have_content("Recovery email sent!")
+		expect(User.first(email: 'test@test.com').token.length).to eq(64)
+	end
+
+	scenario 'resetting the password' do
+		visit "/sessions/reset/(#{User.first(email: 'test@test.com').token})"
+		expect(page).to have_content("Reset your password")
+		fill_in 'email', with: "test@test.com"
+		fill_in 'password', with: "123"
+		fill_in 'password_confirmation', with: "123"
+		click_on 'Reset'
+		expect(page).to have_content("Welcome")
+	end
+
+
 end

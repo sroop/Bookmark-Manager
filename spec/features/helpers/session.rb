@@ -27,5 +27,11 @@ module SessionHelpers
 		end
 	end
 
+	def recover_password(email = "test@test.com")
+		visit '/sessions/recover'
+		fill_in 'email', with: email
+		click_on 'Recover'
+	end
+
 
 end
