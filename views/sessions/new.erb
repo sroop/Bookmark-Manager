@@ -1,0 +1,16 @@
+<h1>Please log in</h1>
+
+<form action="/sessions" method="post">
+	Email: <input name="email" type="text">
+	Password: <input name="password" type="password">
+	<input type="submit" value="Enter">
+</form>
+
+<% if flash[:errors] && !flash[:errors].empty? %>
+  	Sorry, there were the following problems with the form.
+  		<ul id="errors">
+  			<% flash[:errors].each do |error| %>
+  				<li><%= error %></li>
+  			<% end %>
+  		</ul> 
+  <% end %>
