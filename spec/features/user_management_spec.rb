@@ -83,6 +83,12 @@ feature 'User signs out' do
 end
 
 feature 'User forgets password' do
+
+	before(:each) do
+    User.create(email: "test@test.com", 
+                password: 'test', 
+                password_confirmation: 'test')
+  	end
 	
 	scenario 'can see the password recovery form' do
 		visit '/'
@@ -90,5 +96,12 @@ feature 'User forgets password' do
 		expect(page).to have_content("Forgotten your password?")
 		click_on 'Forgotten your password?'
 		expect(page).to have_content("Recover your password")
+	end
+
+	scenario 'can request a recovery email' do
+		visit '/sessions/reset'
+		fill_in 'email', with: "test@test.com"
+		click_on 'Recover'
+		expect(page).to have_content("Recovery email sent!")
 	end
 end
