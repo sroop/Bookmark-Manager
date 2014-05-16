@@ -111,14 +111,13 @@ feature 'User forgets password' do
 	end
 
 	scenario 'resetting the password' do
-		visit "/sessions/reset/#{User.first(email: 'test@test.com').token}"
-		expect(page).to have_content("Reset your password")
-		fill_in 'email', with: "test@test.com"
-		fill_in 'password', with: "123"
-		fill_in 'password_confirmation', with: "123"
-		click_on 'Reset'
+		password_reset
 		expect(page).to have_content("Welcome")
 	end
 
+	scenario 'when the password is successfully reset, the token is deleted' do
+		password_reset
+		expect(User.first(email: 'test@test.com').token).to eq(nil)
+	end
 
 end

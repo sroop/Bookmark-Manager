@@ -33,5 +33,14 @@ module SessionHelpers
 		click_on 'Recover'
 	end
 
+	def password_reset(email = "test@test.com", password = "123", password_confirmation = "123")
+		visit "/sessions/reset/#{User.first(email: 'test@test.com').token}"
+		expect(page).to have_content("Reset your password")
+		fill_in 'email', with: email
+		fill_in 'password', with: password
+		fill_in 'password_confirmation', with: password_confirmation
+		click_on 'Reset'
+	end
+
 
 end
