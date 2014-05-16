@@ -110,7 +110,7 @@ feature 'User forgets password' do
 		expect(User.first(email: 'test@test.com').token.length).to eq(64)
 	end
 
-	scenario 'resetting the password' do
+	scenario 'successfully resetting the password' do
 		password_reset
 		expect(page).to have_content("Welcome")
 	end
@@ -118,6 +118,11 @@ feature 'User forgets password' do
 	scenario 'when the password is successfully reset, the token is deleted' do
 		password_reset
 		expect(User.first(email: 'test@test.com').token).to eq(nil)
+	end
+
+	scenario 'unsuccessfully resetting the password' do
+		password_reset(email = "test@test.com", password = "123", password_confirmation = "123456")
+		expect(page).to have_content("Reset your password")
 	end
 
 end
