@@ -1,27 +1,29 @@
 
 
-<div id="new-link">
-	<form action="/links" method="post">
-		Url: <input type="text" name="url">
-		Title: <input type="text" name="title">
-		Tag: <input type="text" name="tags">
-		<input type="submit" value="Add link">
-	</form>
-</div>
+ <% if current_user %>
+
+	<div id="new-link">
+		<form action="/links" method="post">
+			Url: <input type="text" name="url">
+			Title: <input type="text" name="title">
+			Tag: <input type="text" name="tags">
+			<input type="submit" value="Add link">
+		</form>
+	</div>
 
 
+<% end %>
 
-
-<ul>
-	<% @links.each do |link| %>
-	<li><a href="<%= link.url %>"><%= link.title %></a></li>
-		<% link.tags.each do |tag| %>
-			<form action="/tags/<%= tag.text %>" method="post">
-				<p><%= tag.text %></p>
-			</form>
+	<ul>
+		<% @links.each do |link| %>
+		<li><a href="<%= link.url %>"><%= link.title %></a></li>
+			<% link.tags.each do |tag| %>
+				<form action="/tags/<%= tag.text %>" method="post">
+					<p><%= tag.text %></p>
+				</form>
+			<% end %>
 		<% end %>
-	<% end %>
-</ul>
+	</ul>
 
 
 
