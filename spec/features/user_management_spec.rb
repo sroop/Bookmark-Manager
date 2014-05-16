@@ -87,7 +87,8 @@ feature 'User forgets password' do
 	before(:each) do
     	User.create(email: "test@test.com", 
                 password: 'test', 
-                password_confirmation: 'test')
+                password_confirmation: 'test',
+                token: test_token = SecureRandom.hex(32))
   	end
 	
 	scenario 'can see the password recovery form' do
@@ -110,7 +111,7 @@ feature 'User forgets password' do
 	end
 
 	scenario 'resetting the password' do
-		visit "/sessions/reset/(#{User.first(email: 'test@test.com').token})"
+		visit "/sessions/reset/#{User.first(email: 'test@test.com').token}"
 		expect(page).to have_content("Reset your password")
 		fill_in 'email', with: "test@test.com"
 		fill_in 'password', with: "123"
